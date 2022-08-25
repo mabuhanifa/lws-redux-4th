@@ -2,7 +2,7 @@ import { added } from "../actions";
 
 const addTodo = (todoText) => {
     return async (dispatch) => {
-        const response = await fetch("http://localhost:9000/todos", {
+        const response = await fetch("https://lwsjson.herokuapp.com/todos", {
             method: "POST",
             body: JSON.stringify({
                 text: todoText,

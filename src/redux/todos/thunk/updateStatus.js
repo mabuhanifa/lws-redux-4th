@@ -2,7 +2,7 @@ import { toggled } from "../actions";
 
 const updateStatus = (todoId, currentStatus) => {
     return async (dispatch) => {
-        const response = await fetch(`http://localhost:9000/todos/${todoId}`, {
+        const response = await fetch(`https://lwsjson.herokuapp.com/todos/${todoId}`, {
             method: "PATCH",
             body: JSON.stringify({
                 completed: !currentStatus,
