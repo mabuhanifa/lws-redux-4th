@@ -6,11 +6,12 @@ import save from "../assets/images/save.png";
 import deleteTodo from "../redux/todos/thunk/deleteTodo";
 import updateColor from "../redux/todos/thunk/updateColor";
 import updateStatus from "../redux/todos/thunk/updateStatus";
+import updateText from "../redux/todos/thunk/updateText";
 
 export default function Todo({ todo }) {
   const dispatch = useDispatch();
   const [editTodo, setEditTodo] = useState(false);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const { text, id, completed, color } = todo;
   const handleStatusChange = (todoId) => {
     dispatch(updateStatus(todoId, completed));
@@ -23,7 +24,8 @@ export default function Todo({ todo }) {
   const handleDelete = (todoId) => {
     dispatch(deleteTodo(todoId));
   };
-  const updateTodo = () => {
+  const updateTodo = (todoId) => {
+    dispatch(updateText(todoId, value));
     setEditTodo(false);
   };
   return (
@@ -59,7 +61,7 @@ export default function Todo({ todo }) {
         }`}
         placeholder={!editTodo ? text : "Update Todo Title"}
         disabled={!editTodo}
-        onChange={(e)=>setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
       />
 
       <div
@@ -89,7 +91,7 @@ export default function Todo({ todo }) {
           editTodo ? "flex-shrink-0 w-4 h-4 ml-2 cursor-pointer" : "hidden"
         }`}
         alt="Cancel"
-        onClick={updateTodo}
+        onClick={() => updateTodo(id)}
       />
       <img
         src={edit}
