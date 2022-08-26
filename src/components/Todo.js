@@ -20,12 +20,19 @@ export default function Todo({ todo }) {
   const handleColorChange = (todoId, color) => {
     dispatch(updateColor(todoId, color));
   };
-
+  const val = (e) => {
+    if (e.target.value === "") {
+      setValue(text);
+    } else {
+      setValue(e.target.value);
+    }
+  };
   const handleDelete = (todoId) => {
     dispatch(deleteTodo(todoId));
   };
-  const updateTodo = (todoId) => {
-    dispatch(updateText(todoId, value));
+  const updateTodo = (e) => {
+    e.preventDefault();
+    dispatch(updateText(id, value));
     setEditTodo(false);
   };
   return (
@@ -54,15 +61,19 @@ export default function Todo({ todo }) {
       {/* <div className={`select-none flex-1 ${completed && "line-through"}`}>
         {text}
       </div> */}
-      <input
-        type="text"
-        className={`select-none flex-1 placeholder-gray-700 ${
-          completed && "placeholder-green-600"
-        }`}
-        placeholder={!editTodo ? text : "Update Todo Title"}
-        disabled={!editTodo}
-        onChange={(e) => setValue(e.target.value)}
-      />
+      <form onSubmit={updateTodo} className="select-none flex-1">
+        
+          <input
+            type="text"
+            className={`w-96 placeholder-gray-700 ${
+              completed && "placeholder-green-600"
+            }`}
+            placeholder={!editTodo ? text : "Update Todo Title"}
+            disabled={!editTodo}
+            onChange={val}
+          />
+        
+      </form>
 
       <div
         className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer hover:bg-green-500 border-green-500 ${
@@ -91,7 +102,7 @@ export default function Todo({ todo }) {
           editTodo ? "flex-shrink-0 w-4 h-4 ml-2 cursor-pointer" : "hidden"
         }`}
         alt="Cancel"
-        onClick={() => updateTodo(id)}
+        onClick={updateTodo}
       />
       <img
         src={edit}
