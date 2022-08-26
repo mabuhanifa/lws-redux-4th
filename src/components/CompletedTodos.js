@@ -1,15 +1,11 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import cancelImage from "../assets/images/cancel.png";
 import deleteTodo from "../redux/todos/thunk/deleteTodo";
 import updateColor from "../redux/todos/thunk/updateColor";
 import updateStatus from "../redux/todos/thunk/updateStatus";
-import updateText from "../redux/todos/thunk/updateText";
 
 export default function CompletedTodos({ todo }) {
   const dispatch = useDispatch();
-  const [editTodo, setEditTodo] = useState(false);
-  const [value, setValue] = useState("");
   const { text, id, completed, color } = todo;
   const handleStatusChange = (todoId) => {
     dispatch(updateStatus(todoId, completed));
@@ -18,21 +14,10 @@ export default function CompletedTodos({ todo }) {
   const handleColorChange = (todoId, color) => {
     dispatch(updateColor(todoId, color));
   };
-  const val = (e) => {
-    if (e.target.value === "") {
-      setValue(text);
-    } else {
-      setValue(e.target.value);
-    }
-  };
   const handleDelete = (todoId) => {
     dispatch(deleteTodo(todoId));
   };
-  const updateTodo = (e) => {
-    e.preventDefault();
-    dispatch(updateText(id, value));
-    setEditTodo(false);
-  };
+
   return (
     <div className="flex justify-start items-center p-2 hover:bg-gray-100 hover:transition-all space-x-4 border-b border-gray-400/20 last:border-0">
       <div
